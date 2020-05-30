@@ -4,7 +4,7 @@ library(d3r)
 library(tidyr)
 library(stringr)
 library(treemap)
-library(highcharter)
+
 # Prepare data
 
 gdp_df <- read.csv("gdp-per-worker.csv", header=T)
@@ -88,17 +88,15 @@ sb_output <- df_united %>%
   select(V1, value)
 
 # breakdown by category and subcategory with direct, indirect, induced using sunburst
-sunburst(sb_output) 
+sb <- sunburst(sb_output) 
 
 # viz using treemap
-treemap(combined_df,
+tm <- treemap(combined_df,
         index=c("Sector","MultiplierSector","typeOfChanges","calculated"),
         vSize="value",
         vColor="value")
 
 # viz using bar chart
-
-
 
 # Select important columns
 calc_df <- df %>%

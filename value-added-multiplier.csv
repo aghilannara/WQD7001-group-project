@@ -1,0 +1,125 @@
+Sector,No,Direct impact,Indirect impact,Induced impact,Total impact
+Agriculture - Paddy,1,0.851799011,0.074974652,0.039655611,0.966429274
+Agriculture - Food Crops,2,0.814698555,0.08423569,0.119177419,1.018111663
+Agriculture - Vegetables,3,0.763175479,0.111437294,0.075275053,0.949887826
+Agriculture - Fruits,4,0.690597377,0.168868187,0.070244315,0.929709879
+Agriculture - Rubber,5,0.777726672,0.133780202,0.084526591,0.996033464
+Agriculture - Oil Palm,6,0.773907323,0.112660524,0.268308701,1.154876549
+Agriculture - Flower Plants,7,0.68836115,0.153411579,0.099542659,0.941315389
+Agriculture - Others,8,0.746877188,0.142674379,0.170311791,1.059863358
+Agriculture - Poultry Farming,9,0.606122955,0.273000835,0.123110455,1.002234246
+Agriculture - Other Livestock,10,0.489336252,0.354223854,0.133013217,0.976573323
+Agriculture - Forestry and Logging ,11,0.74030128,0.178458439,0.093089173,1.011848892
+Agriculture - Fishing and Aquaculture,12,0.825215539,0.114840444,0.066600463,1.006656446
+Quarrying and Mining - Crude Oil and Natural Gas,13,0.819808703,0.134947123,0.07858742,1.033343246
+Quarrying and Mining -Mining of Metal Ores,14,0.431199514,0.342899244,0.21536004,0.989458798
+"Quarrying and Mining -Quarrying of Stone, Sand and Clay ",15,0.375121757,0.345488912,0.197331711,0.917942381
+Quarrying and Mining - Other Mining and Quarrying,16,0.345284761,0.384358387,0.238376339,0.968019487
+Manufacturing - Processing and Preserving of Meat,17,0.189121916,0.611816334,0.196168488,0.997106738
+Manufacturing - Processing and Preserving of Seafood,18,0.198091656,0.647884418,0.160474525,1.006450599
+Manufacturing - Processing and Preserving of Fruits & Vegetables,19,0.369257627,0.37045613,0.252780273,0.99249403
+Manufacturing - Dairy Products,20,0.200424007,0.394239867,0.165442692,0.760106566
+Manufacturing - Vegetable & Animal Oils and Fats ,21,0.057703108,0.680597574,0.212108121,0.950408803
+"Manufacturing -Grain Mill Products, Starches and Starch Products",22,0.261326806,0.391945898,0.120524393,0.773797098
+Manufacturing - Bakery Products,23,0.26306814,0.380121012,0.231172931,0.874362083
+Manufacturing - Confectionery,24,0.191811564,0.334979056,0.134289698,0.661080317
+Manufacturing - Other Food Processing,25,0.266661698,0.346538272,0.221682094,0.834882063
+Manufacturing - Prepared Animal Feeds,26,0.133306251,0.618031426,0.14346177,0.894799446
+"Manufacturing - Spirits, Wines and Liquors",27,0.443715393,0.331119423,0.098847796,0.873682612
+"Manufacturing -Soft Drinks, Mineral Waters and Other Bottled Waters",28,0.222512621,0.402495938,0.180451072,0.805459631
+Manufacturing - Tobacco Products,29,0.486543073,0.141932734,0.078083914,0.706559722
+"Manufacturing - Preparation, Spinning and Weaving of Textiles",30,0.232247156,0.198674053,0.102925797,0.533847006
+Manufacturing - Finishing of Textiles,31,0.303500072,0.310946174,0.195036443,0.809482688
+Manufacturing -Other Textiles,32,0.274174664,0.298366476,0.200173464,0.772714604
+Manufacturing - Wearing Apparel,33,0.310737535,0.28997238,0.256437377,0.857147292
+Manufacturing - Leather Products,34,0.243411584,0.359939944,0.222109198,0.825460726
+Manufacturing - Footwear,35,0.325227285,0.280710652,0.241054724,0.846992661
+Manufacturing - Sawmilling and Planning of Wood,36,0.292776154,0.503240601,0.194371895,0.99038865
+Manufacturing - Veneer Sheets and Wood-based Panels,37,0.21769504,0.508544746,0.19733245,0.923572236
+Manufacturing - Builders' Carpentry and Joinery,38,0.270691368,0.471017829,0.295219431,1.036928627
+Manufacturing - Wooden Containers and Other Wood Products ,39,0.302035371,0.456337744,0.297250148,1.055623263
+Manufacturing -Paper and Paper Products,40,0.223031403,0.404032538,0.207523198,0.834587138
+Manufacturing - Furniture   ,41,0.293947438,0.416317572,0.269583221,0.979848231
+Manufacturing - Reproduction of Recorded Media,42,0.321632781,0.325701424,0.23450453,0.881838735
+Manufacturing - Printing,43,0.342267137,0.298004761,0.267326737,0.907598635
+Manufacturing - Coke and Refined Petroleum Products ,44,0.240210812,0.541730065,0.077049922,0.858990799
+Manufacturing - Basic Chemicals,45,0.342761187,0.406643568,0.106428381,0.855833136
+Manufacturing - Fertilizers and Nitrogen Compounds,46,0.278354185,0.311589768,0.108488127,0.698432081
+Manufacturing - Paints and Varnishes ,47,0.273643528,0.346402526,0.198572412,0.818618465
+"Manufacturing - Pharmaceuticals, Medicinal Chemical and Botanical Products ",48,0.351812078,0.264859492,0.193994603,0.810666174
+"Manufacturing -Soaps & Detergents, Cleaning & Polishing, Perfumes and Toilet Preparations",49,0.243041082,0.311323336,0.182253493,0.736617911
+Manufacturing - Other Chemicals Products,50,0.18116098,0.379649321,0.124619213,0.685429514
+Manufacturing - Rubber Tyres and Tubes,51,0.181540296,0.37856784,0.198340505,0.758448641
+Manufacturing - Rubber Processing,52,0.123447516,0.303090026,0.108064943,0.534602485
+Manufacturing - Rubber Gloves,53,0.249356829,0.295316941,0.171695206,0.716368976
+Manufacturing - Other Rubber Products,54,0.297866879,0.300805146,0.250484142,0.849156167
+Manufacturing - Plastic Products,55,0.272962836,0.276209544,0.18531009,0.73448247
+Manufacturing - Glass and Glass Products,56,0.280927774,0.339060918,0.177457801,0.797446493
+"Manufacturing -Refractory, Clay, Porcelain and Ceramic Products",57,0.340275387,0.368530415,0.248325446,0.957131248
+"Manufacturing - Cement, Lime and Plaster",58,0.278113758,0.451662679,0.155255838,0.885032276
+Manufacturing - Non-Metallic Mineral Products ,59,0.204141128,0.453556132,0.202700654,0.860397915
+Manufacturing - Basic Iron and Steel ,60,0.192533131,0.38156044,0.189918208,0.76401178
+Manufacturing - Basic Precious and Other Non-Ferrous Metals,61,0.156858487,0.387496064,0.174502699,0.718857249
+Manufacturing - Casting of Metals,62,0.278392695,0.320135861,0.24679269,0.845321246
+"Structural Metal Products, Tanks, Reservoirs and Steam Generators",63,0.262430024,0.313057008,0.169536782,0.745023813
+Manufacturing - Other Fabricated Metal Products ,64,0.264085027,0.278517227,0.163777068,0.706379322
+"Manufacturing - Engines & Turbines, Fluid Power Equipment, Other Compressors, Taps and Valves",65,0.220391946,0.22891481,0.194695412,0.644002167
+Manufacturing - Other General Purpose Machinery,66,0.215005692,0.320461385,0.18388288,0.719349957
+"Manufacturing - Weapons, Ammunition and Special Purpose Machinery",67,0.271274612,0.297205126,0.217128691,0.785608428
+Manufacturing - Domestic Appliances,68,0.198283619,0.285366716,0.186454951,0.670105286
+"Manufacturing - Computers, Peripheral, Office Equipment and Machinery",69,0.155446975,0.247608891,0.13738751,0.540443376
+"Manufacturing - Electric Motors, Generators and Transformers",70,0.258846437,0.264011462,0.187891296,0.710749195
+"Electricity Distribution & Control  Apparatus, Batteries and Accumulators",71,0.203863653,0.28370396,0.162188791,0.649756405
+"Manufacturing - Fibre Optic Cables, Electronic and Other Electric",72,0.172643543,0.347663372,0.177077567,0.697384482
+"Manufacturing - Wiring Devices, Electric Lighting  Equipment and Other Electrical",73,0.233096954,0.284266026,0.204052739,0.721415719
+Manufacturing - Electronic Components and Boards,74,0.19610059,0.275602745,0.176282742,0.647986077
+Manufacturing - Communication Equipment and Consumer Electronics   ,75,0.215765999,0.251736172,0.163656577,0.631158748
+"Manufacturing - Irradiation Equipment, Electro Medical and  Electrotherapeutic ",76,0.348893339,0.295677859,0.201624075,0.846195273
+"Manufacturing - Measuring Equipment, Testing, Navigating and Control ",77,0.251947807,0.282196548,0.187061435,0.721205789
+"Manufacturing - Optical Instruments, Photographic Equipment, Magnetic and Optical Media",78,0.15299431,0.295648358,0.15404228,0.602684948
+Manufacturing - Watches and Clocks,79,0.338727388,0.264567913,0.22694993,0.830245231
+"Manufacturing - Motor Vehicles, Trailers and Semi Trailers",80,0.239086918,0.299832595,0.13698733,0.675906843
+Manufacturing - Motorcycles,81,0.313729636,0.257851658,0.228410935,0.799992229
+"Manufacturing - Ships, Boats, Bicycles and Invalid Carriages         ",82,0.203100156,0.331620648,0.127680289,0.662401093
+Manufacturing - Other Transport Equipment,83,0.228986701,0.29625684,0.158921602,0.684165143
+Manufacturing - Other Manufacturing,84,0.249971946,0.290843333,0.178236258,0.719051537
+Manufacturing - Repair & Installation of Machinery and Equipment,85,0.217530265,0.369502843,0.252045299,0.839078407
+Services - Electricity and Gas,86,0.490671884,0.262363816,0.115418214,0.868453914
+Services - Water,87,0.58525038,0.294413737,0.16584324,1.045507357
+"Services - Sewerage, Waste Management and Remediation Activities",88,0.376419777,0.458816619,0.286020905,1.121257301
+Construction - Residential Buildings,89,0.317411851,0.397124017,0.321250564,1.035786432
+Construction - Non-Residential Buildings ,90,0.316676131,0.392997245,0.283243218,0.992916594
+Construction -Civil Engineering,91,0.284065717,0.400913836,0.294209573,0.979189126
+Construction - Specialised Construction Activities,92,0.239885818,0.397693135,0.270700335,0.908279289
+"Services - Wholesale & Retail Trade, Repair of Motor Vehicles and Motorcycles ",93,0.59464939,0.239296134,0.222476495,1.056422019
+Services - Accommodation,94,0.551278844,0.288909625,0.303462718,1.143651188
+Services - Food and Beverage ,95,0.401204067,0.396346819,0.242460501,1.040011387
+Services - Land Transport,96,0.386869108,0.371242044,0.226753041,0.984864192
+Services - Water Transport,97,0.363812285,0.407063215,0.198773412,0.969648912
+Services - Air Transport,98,0.242314938,0.485200852,0.233224203,0.960739993
+Services - Warehousing and Support Activities for Transportation,99,0.355820082,0.391957407,0.224611951,0.97238944
+Services - Services Incidental to Water and Air Transportation  ,100,0.617695034,0.239204428,0.2359399,1.092839362
+"Services - Highway Operation Services, Bridge and Tunnel",101,0.746008388,0.126915558,0.112495695,0.985419641
+Services - Postal and Courier Activities,102,0.424112148,0.369119454,0.354603275,1.147834877
+Services - Publishing Activities,103,0.492579891,0.336640992,0.253064787,1.08228567
+Services - Telecommunications,104,0.506090033,0.334512651,0.175342691,1.015945376
+"Services - Motion Picture, Programming and Broadcasting Activities",105,0.403913371,0.436628952,0.193066104,1.033608427
+Services - Computer and Information Services,106,0.452753837,0.339486314,0.306679664,1.098919815
+Services - Monetary Intermediation,107,0.732801981,0.154335874,0.289755269,1.176893123
+Services - Other Financial Service,108,0.417284583,0.441530941,0.261777147,1.120592672
+Services - Insurance/ Takaful and Pension Funding,109,0.643982073,0.252831976,0.201167549,1.097981598
+Services - Activities Auxiliary to Financial Service and Insurance/ Takaful,110,0.503436327,0.347625183,0.243602289,1.094663799
+Services - Real Estate,111,0.622213845,0.252682272,0.155178606,1.030074724
+Services - Ownership of Dwellings,112,0.85542361,0.088154125,0.03503169,0.978609425
+Services - Rental and Leasing,113,0.567460714,0.256821103,0.22404292,1.048324736
+Services - Scientific Research and Development,114,0.614925188,0.225689524,0.267891467,1.108506179
+Services - Professional,115,0.592839419,0.23367272,0.329230012,1.155742151
+Services - Business Services,116,0.381212737,0.426487168,0.313628599,1.121328504
+Services - Public Administration,117,0.615573511,0.247838481,0.560158753,1.423570745
+Services - Education,118,0.664349453,0.230299374,0.58787601,1.482524837
+Services - Health,119,0.430877164,0.386810085,0.430138622,1.247825872
+Services - Public Order and Safety,120,0.420168684,0.38548179,0.478201073,1.283851548
+Services - Other Public Administration,121,0.701134953,0.205457973,0.613703833,1.520296759
+Services - Non-Profit Institutions Serving Households,122,0.345352991,0.458131752,0.38044845,1.183933193
+"Services - Arts, Entertainment and Recreation",123,0.427784325,0.361652115,0.196439956,0.985876396
+Services - Other Private Services,124,0.559287112,0.349198675,0.322898451,1.231384238

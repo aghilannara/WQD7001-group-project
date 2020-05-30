@@ -2,6 +2,9 @@ library(dplyr)
 library(sunburstR)
 library(d3r)
 library(tidyr)
+library(stringr)
+library(treemap)
+library(highcharter)
 # Prepare data
 
 gdp_df <- read.csv("gdp-per-worker.csv", header=T)
@@ -56,11 +59,11 @@ df <- df %>%
   mutate(va_indirect_impact = va_mult_indirect * initial_calc) %>%
   mutate(va_induced_impact = va_mult_induced * initial_calc)
 
-# Tidying up and add a column to identify "output" changes vs "value-added" changes
+# Tidying up and add a column to identify "output" changes vs "value_added" changes
 output_df <- df %>% 
-  select(Sector, MultiplierSector, initial_calc, direct_impact, indirect_impact, induced_impact) %>%
-  gather(calculated,value, 3:6 ) %>%
-  mutate(type_of_changes="output")
+  select(Sector, MultiplierSector, direct_impact, indirect_impact, induced_impact) %>%
+  gather(calculated,value, 3:5 ) %>%
+  mutate(typeOfChanges="output")
 
 output_df <- output_df[, c(1,2,5,3,4)]
 output_df <- output_df[order(output_df$Sector),]  
@@ -68,10 +71,32 @@ output_df <- output_df[order(output_df$Sector),]
 va_df <- df %>% 
   select(Sector, MultiplierSector, va_direct_impact, va_indirect_impact, va_induced_impact) %>%
   gather(calculated,value, 3:5 ) %>%
-  mutate(type_of_changes="value_added")
+  mutate(typeOfChanges="value_added")
 
 va_df <- va_df[, c(1,2,5,3,4)]
 va_df <- va_df[order(va_df$Sector),]  
+
+
+# Building dataframe to be output in sunburst chart
+# Need to have 2 columns only, "Agri - Paddy - .... - .... " , value
+
+combined_df <- rbind(output_df, va_df)
+combined_df_cls <- combined_df %>%
+  mutate_all(funs(str_replace(.,"-",".")))
+df_united <- unite(combined_df_cls, "V1", c(Sector, MultiplierSector, typeOfChanges, calculated),remove=FALSE, sep=" - ")
+sb_output <- df_united %>%
+  select(V1, value)
+
+# breakdown by category and subcategory with direct, indirect, induced using sunburst
+sunburst(sb_output) 
+
+# viz using treemap
+treemap(combined_df,
+        index=c("Sector","MultiplierSector","typeOfChanges","calculated"),
+        vSize="value",
+        vColor="value")
+
+# viz using bar chart
 
 
 
@@ -100,22 +125,3 @@ sum_initial_impairment
 total_changes_in_output
 total_changes_in_valueAdd
 
-# breakdown by category and subcategory with direct, indirect, induced using sunburst
-
-d3_nest(,value_cols = calc_df$direct_impact )
-
-sunburst(data = va_df,)
-
-
-sunburst(data=data.frame("v1"=c("agri - paddy - output - direct_impact",
-                                "agri - paddy - output - indirect_impact",
-                                "agri - paddy - output - induced_impact",
-                                "manu - paddy - value-added - direct_impact",
-                                "manu - paddy - value-added - indirect_impact",
-                                "manu - paddy - value-add - induced_impact"),
-                         "v2"=c(1222,
-                                200,
-                                50,
-                                2000,
-                                300,
-                                30)))

@@ -4,6 +4,7 @@ library(d3r)
 library(tidyr)
 library(stringr)
 library(treemap)
+library(ggplot2)
 
 # Prepare data
 
@@ -33,16 +34,36 @@ names(df) <- c("Sector", "MultiplierSector", "no_of_workers_affected", "period_o
 
 # Get initial dataframe
 
-df <- df %>% 
-  mutate(gdp_per_worker = pull(subset(gdp_df, sectors %in% df[["Sector"]], select = c('y2019')))) %>%
-  mutate(employment = pull(subset(employment_df, sector %in% df[["Sector"]], select = c("y2019")))*1000) %>%
-  mutate(mult_direct = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Direct.impact")))) %>%
-  mutate(mult_indirect = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Indirect.impact")))) %>%
-  mutate(mult_induced = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Induced.impact")))) %>%
-  mutate(va_mult_direct = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Direct.impact")))) %>%
-  mutate(va_mult_indirect = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Indirect.impact")))) %>%
-  mutate(va_mult_induced = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Induced.impact"))))
-  
+# df <- df %>% 
+#   mutate(gdp_per_worker = pull(subset(gdp_df, sectors %in% df[["Sector"]], select = c('y2019')))) %>%
+#   mutate(employment = pull(subset(employment_df, sector %in% df[["Sector"]], select = c("y2019")))*1000) %>%
+#   mutate(mult_direct = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Direct.impact")))) %>%
+#   mutate(mult_indirect = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Indirect.impact")))) %>%
+#   mutate(mult_induced = pull(subset(output_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Induced.impact")))) %>%
+#   mutate(va_mult_direct = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Direct.impact")))) %>%
+#   mutate(va_mult_indirect = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Indirect.impact")))) %>%
+#   mutate(va_mult_induced = pull(subset(value_added_mult_df, Sector %in% df[["MultiplierSector"]], select= c("Induced.impact"))))
+
+# Revised initial dataframe
+df <- df %>% left_join(select(gdp_df,"y2019","sectors"), by=c("Sector"="sectors")) %>%
+  rename(gdp_per_worker = y2019)
+
+df <- df %>% left_join(select(employment_df,"y2019","sector"), by=c("Sector"="sector")) %>%
+  rename(employment = y2019)
+
+df <- df %>% left_join(select(output_mult_df,"Direct.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(mult_direct = Direct.impact)
+df <- df %>% left_join(select(output_mult_df,"Indirect.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(mult_indirect = Indirect.impact)
+df <- df %>% left_join(select(output_mult_df,"Induced.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(mult_induced = Induced.impact)
+
+df <- df %>% left_join(select(value_added_mult_df,"Direct.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(va_mult_direct = Direct.impact)
+df <- df %>% left_join(select(value_added_mult_df,"Indirect.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(va_mult_indirect = Indirect.impact)
+df <- df %>% left_join(select(value_added_mult_df,"Induced.impact","Sector"),by=c("MultiplierSector"="Sector")) %>%
+  rename(va_mult_induced = Induced.impact)
   
 # Calculate the outputs and value added
 
@@ -89,7 +110,7 @@ sb_output <- df_united %>%
 
 # breakdown by category and subcategory with direct, indirect, induced using sunburst
 sb <- sunburst(sb_output) 
-
+sb
 # viz using treemap
 tm <- treemap(combined_df,
         index=c("Sector","MultiplierSector","typeOfChanges","calculated"),
@@ -97,7 +118,17 @@ tm <- treemap(combined_df,
         vColor="value")
 
 # viz using bar chart
+bc <- ggplot(data=combined_df,aes(x=MultiplierSector,y=value,fill=calculated)) + geom_bar(stat="identity", position=position_dodge())
 
+output_df_summary <- output_df %>%
+  group_by(Sector, calculated) %>%
+  summarise(value=sum(value))
+
+ggplot(data=output_df_summary,aes(x=Sector,y=value,fill=calculated)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
 # Select important columns
 calc_df <- df %>%
   select("Sector","MultiplierSector","no_of_workers_affected","period_of_impairment","employment","initial_calc","direct_impact",

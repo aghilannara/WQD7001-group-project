@@ -17,6 +17,8 @@ library(stringr)
 library(treemap)
 library(DT)
 library(d3treeR)
+library(ggplot2)
+library(plotly)
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
@@ -32,6 +34,11 @@ ui <- dashboardPage(
             )
         ),
     dashboardBody(
+        fluidRow(box(titlePanel(title="Economic Impact Assessment - Input-Output Model"),
+                 width = 12,
+                 status = "primary",
+                 background = "light-blue"),
+                 ),
         tags$head(
             tags$style(HTML(".main-sidebar { font-size: 16px; }")) #change the font size to 20
         ),
@@ -65,6 +72,16 @@ ui <- dashboardPage(
                 
             ),
             fluidRow(
+                box(titlePanel(title="Aggregated Economic Impact"),
+                    width = 12,
+                    status = "info")
+            ),
+            fluidRow(
+                valueBoxOutput("initial_impairment",width=4),
+                valueBoxOutput("total_changes_output",width=4),
+                valueBoxOutput("total_changes_valueAdded",width=4)
+            ),
+            fluidRow(
                 box(title = "Sunburst",
                     status="info",
                     width = 6,
@@ -77,7 +94,52 @@ ui <- dashboardPage(
                     collapsible = T,
                     d3tree3Output("tm")
                     )
-               )
+               ),
+            fluidRow(
+                box(titlePanel(title="Breakdown of Changes in Output"),
+                    width = 12,
+                    status = "info")
+            ),
+            fluidRow(
+                valueBoxOutput("sum_output_direct",width=4),
+                valueBoxOutput("sum_output_indirect",width=4),
+                valueBoxOutput("sum_output_induced",width=4)
+            ),
+            fluidRow(
+                valueBoxOutput("sum_initial", width = 6),
+                valueBoxOutput("sum_output_total", width = 6)
+                ),
+            fluidRow(
+                box(title="Sector Categories Impact Breakdown",
+                    solidHeader = T,
+                    div(plotlyOutput("bc_output_sector"))),
+                box(title="Multiplier Categories Impact Breakdown",
+                    solidHeader = T,
+                    div(plotlyOutput("bc_output_mult")))
+            ),
+            fluidRow(
+                box(titlePanel(title="Breakdown of Changes in Value-Added"),
+                    width = 12,
+                    status = "info")
+            ),
+            fluidRow(
+                valueBoxOutput("sum_va_direct",width=4),
+                valueBoxOutput("sum_va_indirect",width=4),
+                valueBoxOutput("sum_va_induced",width=4)
+            ),
+            fluidRow(
+                valueBoxOutput("sum_va_initial", width = 6),
+                valueBoxOutput("sum_va_total", width = 6)
+                ),
+            fluidRow(
+                box(title="Sector Categories Impact Breakdown",
+                    solidHeader = T,
+                    div(plotlyOutput("bc_va_sector"))),
+                box(title="Multiplier Categories Impact Breakdown",
+                    solidHeader = T,
+                    div(plotlyOutput("bc_va_mult")))
+            ),
+            
             )
         )
     )
@@ -86,7 +148,7 @@ ui <- dashboardPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
     
-    # Taken from working.R
+    # Taken and modified from working.R
     # --------------------------------------------------------------------------------------
     gdp_df <- read.csv("gdp-per-worker.csv", header=T)
     employment_df <- read.csv("employment.csv", header=T)
@@ -96,8 +158,18 @@ server <- function(input, output, session) {
     names(gdp_df) <- c("sectors", "units", "y2015", "y2016", "y2017", "y2018", "y2019")
     names(employment_df) <- c("sector", "units", "y2015","y2016","y2017","y2018", "y2019")
     
-    sector_categories <- levels(gdp_df$sectors)
-    multiplier_categories <- levels(output_mult_df$Sector)
+    # Removing whitespace from the string
+    gdp_df <- gdp_df %>%
+        mutate(sectors = str_trim(sectors, side = "both"))
+    employment_df <- employment_df %>%
+        mutate(sector = str_trim(sector, side = "both"))
+    output_mult_df <- output_mult_df %>%
+        mutate(Sector = str_trim(Sector, side = "both"))
+    value_added_mult_df <- value_added_mult_df %>%
+        mutate(Sector = str_trim(Sector, side = "both"))
+    
+    sector_categories <- sort(unique(gdp_df$sectors))
+    multiplier_categories <- sort(unique(output_mult_df$Sector))
     
     
     output$sector_selector <- renderUI({
@@ -108,7 +180,7 @@ server <- function(input, output, session) {
     })
     
     output$workers_affected <- renderUI({
-        numericInput("workers_affected","Estimated number of workers affected", value=0, min=0, max=1000000, step=1000)
+        numericInput("workers_affected","Estimated number of workers affected (in '000)", value=0, min=0, max=1000000, step=1000)
     })
     output$period_of_impairment <- renderUI({
         numericInput("period_impairment","Period of productivity impairment (in days)", value=0, min=0, max=365, step=1)
@@ -144,7 +216,7 @@ server <- function(input, output, session) {
         valueBox(lengths(unique(initial_df$df['mult_sector'])),"Multiplier Sectors",color="blue")
     })
     output$cnt_workers <- renderValueBox({
-        valueBox(sum(as.numeric(initial_df$df[["workers_affected"]])),"Estimated No. Affected Workers", color="blue")
+        valueBox(format(sum(as.numeric(initial_df$df[["workers_affected"]])),big.mark = ",",scientific = F),"Estimated No. Affected Workers", color="blue")
     })
     output$cnt_avg_impairment <- renderValueBox({
         rounded = round(mean(as.numeric(initial_df$df[["periods_of_impairment"]])),1)
@@ -153,19 +225,25 @@ server <- function(input, output, session) {
     
     observeEvent(input$calc,{
         df <- initial_df$df
-        #print(df)
-        # Get initial dataframe
         
-        df <- df %>% 
-            mutate(gdp_per_worker = pull(subset(gdp_df, sectors %in% df[["sector"]], select = c('y2019')))) %>%
-            mutate(employment = pull(subset(employment_df, sector %in% df[["sector"]], select = c("y2019")))*1000) %>%
-            mutate(mult_direct = pull(subset(output_mult_df, Sector %in% df[["mult_sector"]], select= c("Direct.impact")))) %>%
-            mutate(mult_indirect = pull(subset(output_mult_df, Sector %in% df[["mult_sector"]], select= c("Indirect.impact")))) %>%
-            mutate(mult_induced = pull(subset(output_mult_df, Sector %in% df[["mult_sector"]], select= c("Induced.impact")))) %>%
-            mutate(va_mult_direct = pull(subset(value_added_mult_df, Sector %in% df[["mult_sector"]], select= c("Direct.impact")))) %>%
-            mutate(va_mult_indirect = pull(subset(value_added_mult_df, Sector %in% df[["mult_sector"]], select= c("Indirect.impact")))) %>%
-            mutate(va_mult_induced = pull(subset(value_added_mult_df, Sector %in% df[["mult_sector"]], select= c("Induced.impact"))))
+        # Revised initial dataframe
         
+        df <- df %>% left_join(select(gdp_df,"y2019","sectors"), by=c("sector"="sectors")) %>%
+            rename(gdp_per_worker = y2019)
+        df <- df %>% left_join(select(employment_df,"y2019","sector"), by=c("sector"="sector")) %>%
+            rename(employment = y2019)
+        df <- df %>% left_join(select(output_mult_df,"Direct.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(mult_direct = Direct.impact)
+        df <- df %>% left_join(select(output_mult_df,"Indirect.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(mult_indirect = Indirect.impact)
+        df <- df %>% left_join(select(output_mult_df,"Induced.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(mult_induced = Induced.impact)
+        df <- df %>% left_join(select(value_added_mult_df,"Direct.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(va_mult_direct = Direct.impact)
+        df <- df %>% left_join(select(value_added_mult_df,"Indirect.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(va_mult_indirect = Indirect.impact)
+        df <- df %>% left_join(select(value_added_mult_df,"Induced.impact","Sector"),by=c("mult_sector"="Sector")) %>%
+            rename(va_mult_induced = Induced.impact)
         
         # Calculate the outputs and value added
         
@@ -245,7 +323,101 @@ server <- function(input, output, session) {
             sunburst(sb_output, legend = FALSE)
         })
         
-        output$tm <- renderD3tree3(d3tree3(tm))
+        output$tm <- renderD3tree3(d3tree3(tm,rootname = "General"))
+        
+        output$sum_initial <- renderValueBox({
+            rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Initial Changes", color="maroon")
+        })
+        output$sum_output_direct <- renderValueBox({
+            rounded = format(round((as.numeric(sum_output_direct)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Direct Impact to Output", color="blue")
+        })
+        output$sum_output_indirect <- renderValueBox({
+            rounded = format(round((as.numeric(sum_output_indirect)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Indirect Impact to Output", color="blue")
+        })
+        output$sum_output_induced <- renderValueBox({
+            rounded = format(round((as.numeric(sum_output_induced)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Induced Impact to Output", color="blue")
+        })
+        output$sum_output_total <- renderValueBox({
+            rounded = format(round((as.numeric(total_changes_in_output)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Total Impact to Output (Direct + Indirect + Induced)", color="navy")
+        })
+        
+        output_df_summary <- output_df %>%
+            group_by(sector, calculated) %>%
+            summarise(value=sum(value))
+        
+        output$bc_output_sector <- renderPlotly({
+            ggplot(data=output_df_summary,aes(x=sector,y=value,fill=calculated)) + 
+                geom_bar(stat="identity", position=position_dodge()) +
+                theme(axis.title.x=element_blank(),
+                      axis.text.x=element_blank(),
+                      axis.ticks.x=element_blank())
+        })
+        output$bc_output_mult <- renderPlotly({
+            ggplot(data=output_df,aes(x=mult_sector,y=value,fill=calculated)) + 
+                geom_bar(stat="identity", position=position_dodge()) +
+                theme(axis.title.x=element_blank(),
+                      axis.text.x=element_blank(),
+                      axis.ticks.x=element_blank())
+        })
+        #print(output_df)
+        
+        output$sum_va_initial <- renderValueBox({
+            rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Initial Changes", color="maroon")
+        })
+        output$sum_va_direct <- renderValueBox({
+            rounded = format(round((as.numeric(sum_va_direct)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Direct Value-Added Impact", color="blue")
+        })
+        output$sum_va_indirect <- renderValueBox({
+            rounded = format(round((as.numeric(sum_va_indirect)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Indirect Value-Added Impact", color="blue")
+        })
+        output$sum_va_induced <- renderValueBox({
+            rounded = format(round((as.numeric(sum_va_induced)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Induced Value-Added Impact", color="blue")
+        })
+        output$sum_va_total <- renderValueBox({
+            rounded = format(round((as.numeric(total_changes_in_valueAdd)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Total Value-Added Impact (Direct + Indirect + Induced)", color="navy")
+        })
+        
+        va_df_summary <- va_df %>%
+            group_by(sector, calculated) %>%
+            summarise(value=sum(value))
+        
+        output$bc_va_sector <- renderPlotly({
+            ggplot(data=va_df_summary,aes(x=sector,y=value,fill=calculated)) + 
+                geom_bar(stat="identity", position=position_dodge()) +
+                theme(axis.title.x=element_blank(),
+                      axis.text.x=element_blank(),
+                      axis.ticks.x=element_blank())
+        })
+        output$bc_va_mult <- renderPlotly({
+            ggplot(data=va_df,aes(x=mult_sector,y=value,fill=calculated)) + 
+                geom_bar(stat="identity", position=position_dodge()) +
+                theme(axis.title.x=element_blank(),
+                      axis.text.x=element_blank(),
+                      axis.ticks.x=element_blank())
+        })
+        
+        output$initial_impairment <- renderValueBox({
+            rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Initial Changes (Worker Productivity Impairment)", color="maroon")
+        })
+        output$total_changes_output <- renderValueBox({
+            rounded = format(round((as.numeric(total_changes_in_output)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Changes in Output (Direct + Indirect + Induced)", color="navy")
+        })
+        output$total_changes_valueAdded <- renderValueBox({
+            rounded = format(round((as.numeric(total_changes_in_valueAdd)),2),big.mark = ",", nsmall = 2)
+            valueBox(paste0("RM ",rounded), "Changes in Value-Added (Direct + Indirect + Induced)", color="navy")
+        })
     })
     
     

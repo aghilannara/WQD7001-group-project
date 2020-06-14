@@ -30,21 +30,22 @@ ui <- dashboardPage(
     dashboardSidebar(
         sidebarMenu(
             menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-            menuItem("Help", tabName = "help", icon=icon("info-circle"))
+            menuItem("Documentation", tabName = "doc", icon=icon("info-circle")),
+            menuItem("Group Members", tabName = "member", icon=icon("users"))
             )
         ),
     dashboardBody(
-        fluidRow(box(titlePanel(title="Economic Impact Assessment - Input-Output Model"),
-                 width = 12,
-                 status = "primary",
-                 background = "light-blue"),
-                 ),
-        tags$head(
-            tags$style(HTML(".main-sidebar { font-size: 16px; }")) #change the font size to 20
-        ),
         tabItems(
             tabItem(tabName = "dashboard",
-            fluidRow(
+                fluidRow(box(titlePanel(h1("Economic Impact Assessment - Input-Output Model",align="center")),
+                             width = 12,
+                             status = "primary",
+                             background = "light-blue"),
+                ),
+                tags$head(
+                    tags$style(HTML(".main-sidebar { font-size: 16px; }")) #change the font size to 20
+                ),
+                fluidRow(
                 box(title = "1. Select Sector",
                     solidHeader = T,
                     status = "primary",
@@ -140,6 +141,36 @@ ui <- dashboardPage(
                     div(plotlyOutput("bc_va_mult")))
             ),
             
+            ),
+            tabItem(tabName = "doc",
+                    fluidRow(
+                        box(headerPanel(h1("Documentation",align="center")),
+                            width = 12,
+                            status = "info",
+                            background = "aqua")),
+                    fluidRow(box(includeMarkdown("document.Rmd"),
+                                 width = 12,
+                                 status= "info"))
+            ),
+            tabItem(tabName = "member",
+                    fluidRow(
+                        box(headerPanel(h1("Group Member (Group I)",align="center")),
+                            width = 12,
+                            status = "info",
+                            background = "aqua")),
+                    fluidRow(box(titlePanel("Aghilan Narayanan (17218898)"),
+                                 width = 6,
+                                 status= "info"),
+                             box(titlePanel("Nurarlisa Sulong (17220304)"),
+                                 width = 6,
+                                 status= "info")),
+                    fluidRow(box(titlePanel("Najlaa Ramli ()"),
+                                 width = 6,
+                                 status= "info"),
+                             box(titlePanel("Aswani ()"),
+                                 width = 6,
+                                 status= "info")),
+                    
             )
         )
     )
@@ -180,7 +211,7 @@ server <- function(input, output, session) {
     })
     
     output$workers_affected <- renderUI({
-        numericInput("workers_affected","Estimated number of workers affected (in '000)", value=0, min=0, max=1000000, step=1000)
+        numericInput("workers_affected","Estimated number of workers affected", value=0, min=0, max=1000000, step=1000)
     })
     output$period_of_impairment <- renderUI({
         numericInput("period_impairment","Period of productivity impairment (in days)", value=0, min=0, max=365, step=1)
@@ -327,23 +358,23 @@ server <- function(input, output, session) {
         
         output$sum_initial <- renderValueBox({
             rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Initial Changes", color="maroon")
+            valueBox(paste0("RM (",rounded, ")"), "Initial Changes", color="maroon")
         })
         output$sum_output_direct <- renderValueBox({
             rounded = format(round((as.numeric(sum_output_direct)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Direct Impact to Output", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Direct Impact to Output", color="blue")
         })
         output$sum_output_indirect <- renderValueBox({
             rounded = format(round((as.numeric(sum_output_indirect)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Indirect Impact to Output", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Indirect Impact to Output", color="blue")
         })
         output$sum_output_induced <- renderValueBox({
             rounded = format(round((as.numeric(sum_output_induced)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Induced Impact to Output", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Induced Impact to Output", color="blue")
         })
         output$sum_output_total <- renderValueBox({
             rounded = format(round((as.numeric(total_changes_in_output)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Total Impact to Output (Direct + Indirect + Induced)", color="navy")
+            valueBox(paste0("RM (",rounded, ")"), "Total Impact to Output (Direct + Indirect + Induced)", color="navy")
         })
         
         output_df_summary <- output_df %>%
@@ -368,23 +399,23 @@ server <- function(input, output, session) {
         
         output$sum_va_initial <- renderValueBox({
             rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Initial Changes", color="maroon")
+            valueBox(paste0("RM (",rounded, ")"), "Initial Changes", color="maroon")
         })
         output$sum_va_direct <- renderValueBox({
             rounded = format(round((as.numeric(sum_va_direct)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Direct Value-Added Impact", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Direct Value-Added Impact", color="blue")
         })
         output$sum_va_indirect <- renderValueBox({
             rounded = format(round((as.numeric(sum_va_indirect)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Indirect Value-Added Impact", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Indirect Value-Added Impact", color="blue")
         })
         output$sum_va_induced <- renderValueBox({
             rounded = format(round((as.numeric(sum_va_induced)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Induced Value-Added Impact", color="blue")
+            valueBox(paste0("RM (",rounded, ")"), "Induced Value-Added Impact", color="blue")
         })
         output$sum_va_total <- renderValueBox({
             rounded = format(round((as.numeric(total_changes_in_valueAdd)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Total Value-Added Impact (Direct + Indirect + Induced)", color="navy")
+            valueBox(paste0("RM (",rounded, ")"), "Total Value-Added Impact (Direct + Indirect + Induced)", color="navy")
         })
         
         va_df_summary <- va_df %>%
@@ -408,15 +439,15 @@ server <- function(input, output, session) {
         
         output$initial_impairment <- renderValueBox({
             rounded = format(round((as.numeric(sum_initial_impairment)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Initial Changes (Worker Productivity Impairment)", color="maroon")
+            valueBox(paste0("RM (",rounded, ")"), "Initial Changes (Worker Productivity Impairment)", color="maroon")
         })
         output$total_changes_output <- renderValueBox({
             rounded = format(round((as.numeric(total_changes_in_output)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Changes in Output (Direct + Indirect + Induced)", color="navy")
+            valueBox(paste0("RM (",rounded, ")"), "Changes in Output (Direct + Indirect + Induced)", color="navy")
         })
         output$total_changes_valueAdded <- renderValueBox({
             rounded = format(round((as.numeric(total_changes_in_valueAdd)),2),big.mark = ",", nsmall = 2)
-            valueBox(paste0("RM ",rounded), "Changes in Value-Added (Direct + Indirect + Induced)", color="navy")
+            valueBox(paste0("RM (",rounded, ")"), "Changes in Value-Added (Direct + Indirect + Induced)", color="navy")
         })
     })
     

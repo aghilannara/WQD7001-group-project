@@ -1,0 +1,50 @@
+## Economic Input-Output Assessment Model
+```
+```
+
+### Objectives
+
+> *To explore the total impact on chosen sectors and multipliers in term of changes in output and value-added*
+
+### Data Included
+
+> Several datasets are identified for this impact study. 
+
+> **Employment** = *Total Employments in ('000) by Year*
+
+> **GDP** = *Total GDP per sectors by Year in (RM mil)*
+
+> **Output Multiplier** = *Output Multiplier for Sectors provided by DOSM Malaysia*
+
+> **Value Added Multiplier** = *Value-added Multiplier for Sectors provided by DOSM Malaysia*
+
+
+### Calculation
+
+#### Initial Changes (Worker Productivity Impairment)
+
+> **Initial Changes** = *GDP* * *Workers Affected* * *(Period of Impairment / 365)* 
+
+#### Changes in Output (Direct + Indirect + Induced)
+
+> **Direct Impact** = *Output Direct Multiplier* * *Initial Changes*
+
+> **Indirect Impact** = *Output Indirect Multiplier* * *Initial Changes*
+
+> **Induced Impact** = *Output Induced Multiplier* * *Initial Changes*
+
+
+#### Changes in Value-Added (Direct + Indirect + Induced)
+
+> **Value Added Direct Impact** = *Value Added Direct Multiplier* * *Initial Changes*
+
+> **Value Added Indirect Impact** = *Value Added Indirect Multiplier* * *Initial Changes*
+
+> **Value Added Induced Impact** = *Value Added Induced Multiplier* * *Initial Changes*
+
+
+### References 
+
+> 1. Statistics provided by DOSM Malaysia:  [Statistics](https://www.dosm.gov.my/v1/index.php?r=column/ctwoByCat&parent_id=99&menu_id=TE5CRUZCblh4ZTZMODZIbmk2aWRRQT09)
+
+> 2. Wikipedia: [Malaysia Economy](https://en.wikipedia.org/wiki/Economy_of_Malaysia)

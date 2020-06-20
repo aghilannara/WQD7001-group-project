@@ -164,10 +164,10 @@ ui <- dashboardPage(
                              box(titlePanel("Nurarlisa Sulong (17220304)"),
                                  width = 6,
                                  status= "info")),
-                    fluidRow(box(titlePanel("Najlaa Ramli ()"),
+                    fluidRow(box(titlePanel("Najlaa Ramli (17219402)"),
                                  width = 6,
                                  status= "info"),
-                             box(titlePanel("Aswani ()"),
+                             box(titlePanel("Nurul Aswani (17218967)"),
                                  width = 6,
                                  status= "info")),
                     

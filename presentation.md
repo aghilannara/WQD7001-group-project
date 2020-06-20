@@ -7,23 +7,23 @@ date: 22nd June 2020
 <br>
 
 ### Group Members (Group I):
-- Aghilan Narayanan (17218898)
-- Nurul Aswani (17218967)
-- Nurarlisa Sulong (17220304)
 - Najlaa Ramli (17219402)
+- Nurul Aswani (17218967)
+- Aghilan Narayanan (17218898)
+- Nurarlisa Sulong (17220304)
 
 
 Project Introduction
 ========================================================
 ### Problem Statement
-Due to circumstances, there are substantial economic impact with demand changes in the Malaysia economy but there are no exploratory or visualization to showcase such impact.   
+Due to recent circumstances, there are a lot of uncertainties in regard to the economic outlook. Although information on potential demand changes are available, there are no exploratory or visualization tools to showcase such impact in an easier and comprehensible manner.   
 
 
 ### Question / Objective
-To determine the wider economic impact (i.e. direct, indirect and induced impact) with any demand changes in the Malaysian economy using exploratory method and visualize the impact. 
+To gauge and illustrate the wider economic impacts (i.e. **direct**, **indirect**, and **induced** impacts) with any demand changes in the Malaysian economy using an established **Input-Output** framework
 
 ### Beneficiaries
-The dashboard are set up for the end-user to explore the wider impact on Malaysian economy with selected demand changes. 
+The Shiny app serves as an exploratory and visualization tool for any user to explore the wider economic impacts with any demand changes in the Malaysian economy.
 
 ### Dataset Used
 There are 4 type of datasets acquired from **DOSM Malaysia** being used in the project which are further explained in our Shiny dashboard under "Documentation". The Documentation also provides the calculation done on the data. Refer to the last slide for the link. 

@@ -1,10 +1,25 @@
 ## Economic Input-Output Assessment Model
+
 ```
 ```
 
 ### Objectives
 
 > *To explore the total impact on chosen sectors and multipliers in term of changes in output and value-added*
+
+-----
+
+### Introduction
+
+#### **The I/O Framework**
+
+> Department of Statistics Malaysia (DOSM) published the `Supply and Use Tables` that are essential in the construct of this `I/O framework`. We are also leveraging on `Gross Domestic Product (GDP)` and `employment data points` from DOSM in this model. 
+
+> Our model currently estimates the impacts for two measures – `Output` and `Value Added` in the Malaysian economy. `Output` is the broadest measure of economic activity that considers total gross value in production. Meanwhile, `Value Added` refers to the additional value over the cost of inputs used in production (i.e. the difference between revenues and expenses on intermediate inputs). `Value added` is regarded as a more meaningful measure of economic impact as it avoids double-counting during each round of impacts. 
+
+>The `I/O framework` allows us to estimate total economic impact through three different categories – `direct`, `indirect`, and `induced` impacts. `Direct` impacts result from changes associated with the specified sector – in our case, impairments to full sectoral productivity. `Indirect`, or second-round impacts, result from impacts to the suppliers of goods and services to the specified sector. `Induced` impacts result from the displaced income of workers in direct and indirect sectors, in impacting further rounds of household spending.
+
+-----
 
 ### Data Included
 
@@ -14,18 +29,27 @@
 
 > **GDP** = *Total GDP per sectors by Year in (RM mil)*
 
-> **Output Multiplier** = *Output Multiplier for Sectors provided by DOSM Malaysia*
+> **Output Multiplier** = *Output Multiplier for Sectors calculated from Supply and Use Tables by DOSM Malaysia*
 
-> **Value Added Multiplier** = *Value-added Multiplier for Sectors provided by DOSM Malaysia*
+> **Value Added Multiplier** = *Value added Multiplier for Sectors calculated from Supply and Use Tables by DOSM Malaysia*
 
+
+```
+```
 
 ### Calculation
 
 #### Initial Changes (Worker Productivity Impairment)
 
-> **Initial Changes** = *GDP* * *Workers Affected* * *(Period of Impairment / 365)* 
+> **Initial Changes** =  *Sectoral GDP* x *No. of Workers Affected* x  *Period of impairment (in days)* 
+
+-----
+
+#### Definition of **Output**
+> Output is the broadest measure of economic activity that considers total gross value in production
 
 #### Changes in Output (Direct + Indirect + Induced)
+
 
 > **Direct Impact** = *Output Direct Multiplier* * *Initial Changes*
 
@@ -33,8 +57,14 @@
 
 > **Induced Impact** = *Output Induced Multiplier* * *Initial Changes*
 
+-----
+
+#### Definition of **Value Added**
+> Value Added refers to the additional value over the cost of inputs used in production (i.e. the difference between revenues and expenses on intermediate inputs). Value added is regarded as a more meaningful measure of economic impact as it avoids double-counting during each round of impacts.
 
 #### Changes in Value-Added (Direct + Indirect + Induced)
+
+
 
 > **Value Added Direct Impact** = *Value Added Direct Multiplier* * *Initial Changes*
 
@@ -42,6 +72,9 @@
 
 > **Value Added Induced Impact** = *Value Added Induced Multiplier* * *Initial Changes*
 
+
+```
+```
 
 ### References 
 

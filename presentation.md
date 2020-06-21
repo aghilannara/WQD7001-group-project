@@ -62,4 +62,4 @@ Summary
 
 - (Github) https://github.com/aghilannara/WQD7001-group-project/
 - (R Shiny App) https://aghilan.shinyapps.io/awan-dash/
-- (Video Presentation) http://bit.ly/sasasasasa
+- (Video Presentation) https://drive.google.com/drive/folders/1fXIP3tKS4LpTVgrXMSAlqftW91vw6pZl?usp=sharing
